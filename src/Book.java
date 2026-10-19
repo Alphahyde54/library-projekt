@@ -1,17 +1,14 @@
 import java.util.Objects;
 
-public class Book {
+public class Book extends Resource {
     final String author;
     final String title;
     final String isbn;
     final int id;
 
 
-    public Book(String author, String title, String isbn, int id){
-        this.author = author;
-        this.title = title;
-        this.isbn = isbn;
-        this.id = id;
+    public Book(String indetifier, String title, String creator, double length){
+        super(indetifier, title, creator);
     }
     public int getID(){
         return id;

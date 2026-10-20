@@ -34,9 +34,9 @@ public class Library {
     }
 
     // Lists
-    public Resource getResource(String identifier) {
+    public Resource getTitle(String title) {
         for (int i = 0; i < resources.size(); i++) {
-            if (resources.get(i).getIdentifier().equalsIgnoreCase(identifier)) {
+            if (resources.get(i).getTitle().equalsIgnoreCase(title)) {
                 return resources.get(i);
             }
         }
@@ -56,9 +56,9 @@ public class Library {
             return null;
         }
 
-    public boolean isAvailable(String identifier) {
+    public boolean isAvailable(String title) {
         for (Loan loan : loans) {
-            if (loan.getBook().getIdentifier().equalsIgnoreCase(identifier)) {
+            if (loan.getResource().getTitle().equalsIgnoreCase(title)) {
                 return false;
             }
 
@@ -66,10 +66,10 @@ public class Library {
         return true;
     }
 
-        public LoanResult loanMaterial(String identifier, int memberNumber){
-            if(getMember(memberNumber) != null && getResource(identifier) != null){
-                if(isAvailable(identifier)){
-                    Loan loan = new Loan(getMember(memberNumber), getResource(identifier));
+        public LoanResult loanMaterial(String title, int memberNumber){
+            if(getMember(memberNumber) != null && getTitle(title) != null){
+                if(isAvailable(title)){
+                    Loan loan = new Loan(getMember(memberNumber), getTitle(title));
                     addLoan(loan);
                     return LoanResult.LOANED;
                 }
@@ -79,13 +79,13 @@ public class Library {
             return LoanResult.ERROR;
         }
 
-        public void returnMaterial(int id){
+        public void returnMaterial(String title){
             for (int i = 0 ; i < loans.size() ; i++) {
-                if(loans.get(i).getBook().getID() == id){
+                if(loans.get(i).getResource().getTitle().equalsIgnoreCase(title)){
                     loans.remove(i);
-                    IO.println("Book has been returned...");
+                    IO.println("Material has been returned...");
                 } else {
-                    IO.println("Book already in library");
+                    IO.println("Material is already in the library");
                 }
             }
         }
@@ -104,6 +104,7 @@ public class Library {
         }
 
 // Collections
+    /*
         public void printBooks () {
             for (Book book : books) {
                 if (isAvailable(book.getID())) {
@@ -111,6 +112,14 @@ public class Library {
                 } else {
                     IO.println(book + " -- Bogen er udlånt...");
                 }
+            }
+        }
+
+     */
+
+        public void printResources(){
+            for(Resource resource : resources){
+                IO.println(resource);
             }
         }
         public void printMembers () {

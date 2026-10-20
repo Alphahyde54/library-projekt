@@ -13,7 +13,7 @@ public class ConsoleUI {
             int choice = Integer.parseInt(IO.readln("Indtast valg: "));
             switch (choice){
                 case 1 -> borrowBook();
-                case 2 -> returnBook();
+                case 2 -> returnMaterial();
                 case 3 -> showLoans();
                 case 0 -> running = false;
                 default -> IO.println("Lån");
@@ -33,21 +33,22 @@ public class ConsoleUI {
     }
 
     public void borrowBook(){
-        library.printBooks();
+        library.printResources();
        int memberNumber = Integer.parseInt(IO.readln("Hvad er dit medlemsnummer? "));
-       int id = Integer.parseInt(IO.readln("Hvilken bog vil du låne? "));
+       String title = IO.readln("Hvilken bog vil du låne? ");
 
-       if(library.loanBook(id, memberNumber)){
-           IO.println("Du har nu lånt: " + library.getBook(id));
-       } else {
-           IO.println("Der er sket en fejl...");
+       switch(library.loanMaterial(title, memberNumber)){
+           case LOANED -> IO.println("Du har nu lånt: " + library.getResource(title));
+           case CAN_LOAN -> IO.println("Nigger");
+           case CANNOT_LOAN -> IO.println("Nigger");
+           case ERROR -> IO.println("Der er sket en fejl...");
        }
     }
 
-    public void returnBook(){
+    public void returnMaterial(){
         library.printBooks();
-        int id = Integer.parseInt(IO.readln("Hvilken bog vil du returnere? "));
-        library.returnBook(id);
+        String title = IO.readln("Hvad vil du gerne returnere? ");
+        library.returnMaterial(title);
     }
 
     public void showLoans(){

@@ -1,3 +1,5 @@
+import java.util.Locale;
+
 public class ConsoleUI {
     Library library;
 
@@ -35,12 +37,12 @@ public class ConsoleUI {
     public void borrowBook(){
         library.printResources();
        int memberNumber = Integer.parseInt(IO.readln("Hvad er dit medlemsnummer? "));
-       String title = IO.readln("Hvilken bog vil du låne? ");
+       String title = (IO.readln("Hvilket materiale vil du låne? "));
 
        switch(library.loanMaterial(title, memberNumber)){
            case LOANED -> IO.println("Du har nu lånt: " + library.getResource(title));
-           case CAN_LOAN -> IO.println("Nigger");
-           case CANNOT_LOAN -> IO.println("Nigger");
+           case CAN_LOAN -> IO.println("You can loan it");
+           case CANNOT_LOAN -> IO.println("Du kan ikke låne det valgte materiale");
            case ERROR -> IO.println("Der er sket en fejl...");
        }
     }

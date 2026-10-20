@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 public class Library {
-    private ArrayList<Book> books = new ArrayList<>();
+    private ArrayList<Resource> resources = new ArrayList<>();
     private ArrayList<Member> members = new ArrayList<>();
     private ArrayList<Loan> loans = new ArrayList<>();
 
@@ -15,24 +15,35 @@ public class Library {
     }
 
     public void addBook(Book book) {
-        books.add(book);
+        resources.add(book);
     }
+
+    public void addVideoGame(VideoGame videoGame){
+        resources.add(videoGame);
+    }
+    public void addMovie(Movie movie){
+        resources.add(movie);
+    }
+    public void addAudioBook(AudioBook audioBook){
+        resources.add(audioBook);
+    }
+
 
     public void addLoan(Loan loan) {
         loans.add(loan);
     }
 
     // Lists
-    public Book getBook(int id) {
-        for (int i = 0; i < books.size(); i++) {
-            if (books.get(i).getID() == id) {
-                return books.get(i);
+    public Resource getTitle(String title) {
+        for (int i = 0; i < resources.size(); i++) {
+            if (resources.get(i).getTitle().equalsIgnoreCase(title)) {
+                return resources.get(i);
             }
         }
         return null;
     }
 
-        public Loan getLoan ( int index){
+        public Loan getLoan (int index){
             return loans.get(index);
         }
 
@@ -45,9 +56,9 @@ public class Library {
             return null;
         }
 
-    public boolean isAvailable(int bookID) {
+    public boolean isAvailable(String title) {
         for (Loan loan : loans) {
-            if (loan.getBook().getID() == bookID) {
+            if (loan.getResource().getTitle().equalsIgnoreCase(title)) {
                 return false;
             }
 
@@ -55,26 +66,26 @@ public class Library {
         return true;
     }
 
-        public boolean loanBook(int id, int memberNumber){
-            if(getMember(memberNumber) != null && getBook(id) != null){
-                if(isAvailable(id)){
-                    Loan loan = new Loan(getMember(memberNumber), getBook(id));
+        public LoanResult loanMaterial(String title, int memberNumber){
+            if(getMember(memberNumber) != null && getTitle(title) != null){
+                if(isAvailable(title)){
+                    Loan loan = new Loan(getMember(memberNumber), getTitle(title));
                     addLoan(loan);
-                    return true;
+                    return LoanResult.LOANED;
                 }
             } else {
-                return false;
+                return LoanResult.CANNOT_LOAN;
             }
-            return false;
+            return LoanResult.ERROR;
         }
 
-        public void returnBook(int id){
+        public void returnMaterial(String title){
             for (int i = 0 ; i < loans.size() ; i++) {
-                if(loans.get(i).getBook().getID() == id){
+                if(loans.get(i).getResource().getTitle().equalsIgnoreCase(title)){
                     loans.remove(i);
-                    IO.println("Book has been returned...");
+                    IO.println("Material has been returned...");
                 } else {
-                    IO.println("Book already in library");
+                    IO.println("Material is already in the library");
                 }
             }
         }
@@ -93,6 +104,7 @@ public class Library {
         }
 
 // Collections
+    /*
         public void printBooks () {
             for (Book book : books) {
                 if (isAvailable(book.getID())) {
@@ -100,6 +112,14 @@ public class Library {
                 } else {
                     IO.println(book + " -- Bogen er udlånt...");
                 }
+            }
+        }
+
+     */
+
+        public void printResources(){
+            for(Resource resource : resources){
+                IO.println(resource);
             }
         }
         public void printMembers () {

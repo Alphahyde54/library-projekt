@@ -38,7 +38,7 @@ public class Library {
     // Lists
     public Resource getResource(String title) {
         for (int i = 0; i < resources.size(); i++) {
-            if (resources.get(i).getTitle().equalsIgnoreCase(title)) {
+            if (resources.get(i).getTitle().toLowerCase().contains(title.trim().toLowerCase())) {
                 return resources.get(i);
             }
         }
@@ -60,7 +60,7 @@ public class Library {
 
     public boolean isAvailable(String title) {
         for (Loan loan : loans) {
-            if (loan.getResource().getTitle().equalsIgnoreCase(title)) {
+            if (loan.getResource().getTitle().toLowerCase().contains(title.trim().toLowerCase())) {
                 return false;
             }
 

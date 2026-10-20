@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class Library {
     private ArrayList<Resource> resources = new ArrayList<>();
@@ -32,6 +33,7 @@ public class Library {
     public void addLoan(Loan loan) {
         loans.add(loan);
     }
+
 
     // Lists
     public Resource getResource(String title) {

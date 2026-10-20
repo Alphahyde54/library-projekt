@@ -34,7 +34,7 @@ public class Library {
     }
 
     // Lists
-    public Resource getTitle(String title) {
+    public Resource getResource(String title) {
         for (int i = 0; i < resources.size(); i++) {
             if (resources.get(i).getTitle().equalsIgnoreCase(title)) {
                 return resources.get(i);
@@ -67,9 +67,9 @@ public class Library {
     }
 
         public LoanResult loanMaterial(String title, int memberNumber){
-            if(getMember(memberNumber) != null && getTitle(title) != null){
+            if(getMember(memberNumber) != null && getResource(title) != null){
                 if(isAvailable(title)){
-                    Loan loan = new Loan(getMember(memberNumber), getTitle(title));
+                    Loan loan = new Loan(getMember(memberNumber), getResource(title));
                     addLoan(loan);
                     return LoanResult.LOANED;
                 }

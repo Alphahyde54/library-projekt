@@ -46,7 +46,7 @@ public class ConsoleUI {
     }
 
     public void returnMaterial(){
-        library.printBooks();
+        library.printResources();
         String title = IO.readln("Hvad vil du gerne returnere? ");
         library.returnMaterial(title);
     }

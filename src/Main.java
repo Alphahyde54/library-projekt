@@ -27,6 +27,15 @@ void main() {
     library.addBook(book1);
     library.addBook(book2);
     library.addBook(book3);
+    library.addMovie(movie1);
+    library.addMovie(movie2);
+    library.addMovie(movie3);
+    library.addAudioBook(audioBook1);
+    library.addAudioBook(audioBook2);
+    library.addAudioBook(audioBook3);
+    library.addVideoGame(videoGame1);
+    library.addVideoGame(videoGame2);
+    library.addVideoGame(videoGame3);
 
     consoleUI.run();
 }

@@ -41,8 +41,9 @@ public class ConsoleUI {
 
        switch(library.loanMaterial(title, memberNumber)){
            case LOANED -> IO.println("Du har nu lånt: " + library.getResource(title));
-           case CAN_LOAN -> IO.println("You can loan it");
            case CANNOT_LOAN -> IO.println("Du kan ikke låne det valgte materiale");
+           case WRONGID -> IO.println("Du har indtastet et ID, som ikke er registreret i systemet");
+           case WRONGTITEL -> IO.println("Du har indtastet en titel som ikke eksistere");
            case ERROR -> IO.println("Der er sket en fejl...");
        }
     }

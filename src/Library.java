@@ -28,8 +28,6 @@ public class Library {
     public void addAudioBook(AudioBook audioBook){
         resources.add(audioBook);
     }
-
-
     public void addLoan(Loan loan) {
         loans.add(loan);
     }
@@ -37,6 +35,9 @@ public class Library {
 
     // Lists
     public Resource getResource(String title) {
+        if(title.trim().isEmpty()){
+            return null;
+        }
         for (int i = 0; i < resources.size(); i++) {
             if (resources.get(i).getTitle().toLowerCase().contains(title.trim().toLowerCase())) {
                 return resources.get(i);
@@ -74,9 +75,13 @@ public class Library {
                     Loan loan = new Loan(getMember(memberNumber), getResource(title));
                     addLoan(loan);
                     return LoanResult.LOANED;
+                } else {
+                    return LoanResult.CANNOT_LOAN;
                 }
-            } else {
-                return LoanResult.CANNOT_LOAN;
+            } else if (getMember(memberNumber) == null) {
+                return LoanResult.WRONGID;
+            } else if(getResource(title) == null) {
+                return LoanResult.WRONGTITEL;
             }
             return LoanResult.ERROR;
         }
@@ -127,6 +132,11 @@ public class Library {
         public void printMembers () {
             for (Member members_ : members) {
                 IO.println(members_);
+            }
+        }
+        public void printLoans() {
+            for(Loan loan : loans){
+                IO.println(loan);
             }
         }
 }

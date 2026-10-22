@@ -7,8 +7,4 @@ public class Book extends Resource {
         super(indetifier, title, creator);
         this.length = length;
     }
-
-    public String getIdentifier() {
-        return getIdentifier();
-    }
 }

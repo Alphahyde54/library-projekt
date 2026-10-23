@@ -1,94 +1,98 @@
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class LibraryTest {
-    Library library = new Library();
-    Book book1 = new Book("9781492072508", "Think Java", "Allan B. Downey", 326);
-    Member member1 = new Member("Daniel", 1234);
-    String title = "Think Java";
+    Library library;
+    Book book1;
+    Member member1;
+    String title;
+    int memberID;
 
+    @BeforeEach
+    void setUp(){
+         library = new Library();
+         book1 = new Book("9781492072508", "Think Java", "Allan B. Downey", 326);
+         member1 = new Member("Daniel", 1234);
+         title = "Think Java";
+         memberID = 1234;
+         library.addMember(member1);
+         library.addBook(book1);
+    }
 
     @Test
     void isAvailable() {
-        library.addBook(book1);
         assertTrue(library.isAvailable(title));
     }
 
     @Test
     void loanMaterialTrue() {
-    library.addMember(member1);
-    library.addBook(book1);
-    assertEquals(LoanResult.LOANED, library.loanMaterial(title, 1234));
-    IO.println(library.findLoansByMemberId(1234));
+    assertEquals(LoanResult.LOANED, library.loanMaterial(title, memberID));
+    IO.println(library.findLoansByMemberId(memberID));
     }
     @Test
     void loanMaterialAlreadyLoaned() {
-        library.addMember(member1);
-        library.addBook(book1);
-        assertEquals(LoanResult.CANNOT_LOAN, library.loanMaterial(title, 1234));
-        library.printLoans();
+        library.addLoan(new Loan(new Member("Lucas", 4567),book1));
+        assertEquals(LoanResult.CANNOT_LOAN, library.loanMaterial(title, memberID));
     }
     @Test
     void loanMaterialWrongMemberID() {
-        library.addMember(member1);
-        library.addBook(book1);
-        assertEquals(LoanResult.WRONGID, library.loanMaterial(title, 1234));
+        assertEquals(LoanResult.WRONGID, library.loanMaterial(title, 9999));
     }
     @Test
     void loanMaterialWrongTitel() {
-        library.addMember(member1);
-        library.addBook(book1);
-        assertEquals(LoanResult.WRONGTITEL, library.loanMaterial(title, 1234));
+        assertEquals(LoanResult.WRONGTITEL, library.loanMaterial("Suicide Squad", memberID));
+    }
+
+    @Test
+    void tjekHvisFejlIngenAtIngenLånOprettet(){
+        library.loanMaterial(title,9999);
+        assertTrue(library.isAvailable(title));
+        assertNull(library.findLoansByMemberId(memberID));
     }
 
     @Test
     void returnMaterial() {
+            library.loanMaterial(title, memberID);
+            assertFalse(library.isAvailable(title));
+
+            library.returnMaterial(title);
+            assertTrue(library.isAvailable(title));
+    }
+
+    @Test
+    void returnMaterialAndLoanAgain(){
+        library.addLoan(new Loan(new Member("Lucas", 4567),book1));
+        assertFalse(library.isAvailable(title));
+
+        library.returnMaterial(title);
+        assertTrue(library.isAvailable(title));
+
+        assertEquals(LoanResult.LOANED, library.loanMaterial(title,memberID));
     }
 
     @Test
     void findLoansByMemberId() {
+        assertNull(library.findLoansByMemberId(memberID));
+
+        library.loanMaterial(title, memberID);
+
+        var loans = library.findLoansByMemberId(memberID);
+        assertEquals(1, loans.size());
+
     }
 
     @Test
-    void printResources() {
-        Library library = new Library();
+    void findObjectByMemberId() {
+        var loan = new Loan(member1, book1);
 
-        AudioBook audioBook3 = new AudioBook("6801234567824", "Red Rising", "Pierce Brown", 382);
-        Movie movie3 = new Movie("7701234567892", "Oppenheimer", "Christopher Nolan", 180);
-        Book book3 = new Book("9780062316097", "Sapiens", "Yuval Noah Harari", 466);
-        VideoGame videoGame3 = new VideoGame("2801234567855", "Call of Duty: Black Ops 2", "Activision");
+        assertSame(member1, loan.getMember());
+        assertSame(book1, loan.getResource());
 
-        library.addAudioBook(audioBook3);
-        library.addBook(book3);
-        library.addMovie(movie3);
-        library.addVideoGame(videoGame3);
+        //assertSame(loan, );
 
-
-        assertEquals(audioBook3, library.getResource("Red Rising"));
-        assertEquals(book3, library.getResource("Sapiens"));
-        assertEquals(movie3, library.getResource("Oppenheimer"));
-        assertEquals(videoGame3, library.getResource("Call of Duty: Black Ops 2"));
-
-        library.printResources();
     }
 
-    @Test
-    void printMembers() {
-        Library library = new Library();
-        Member member1 = new Member("Daniel", 1234);
-        Member member2 = new Member("Loke", 4567);
-        Member member3 = new Member("Lucas", 7890);
-
-        library.addMember(member1);
-        library.addMember(member2);
-        library.addMember(member3);
-
-        assertEquals(member1, library.getMember(1234));
-        assertEquals(member2, library.getMember(4567));
-        assertEquals(member3, library.getMember(7890));
-
-        library.printMembers();
-    }
 }

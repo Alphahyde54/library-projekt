@@ -23,8 +23,7 @@ void main() {
     new Member("Lucas", 7890)
     );
 
-    List<Loan> loans = new ArrayList<>();
-    Library library = new Library(resources, members, loans);
+    Library library = new Library(resources, members);
     ConsoleUI consoleUI = new ConsoleUI(library);
     consoleUI.run();
 }

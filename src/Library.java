@@ -8,11 +8,11 @@ public class Library {
     private final List<Member> members;
     private final List<Loan> loans;
 
-    public Library(List<Resource> resources, List<Member> members, List<Loan> loans) {
+    public Library(List<Resource> resources, List<Member> members) {
 
         this.resources = resources;
         this.members = members;
-        this.loans = loans;
+        this.loans = new ArrayList<>();
     }
 
     //Add functions
@@ -74,7 +74,7 @@ public class Library {
         return true;
     }
 
-        public LoanResult loanMaterial(String title, int memberNumber){
+    public LoanResult loanMaterial(String title, int memberNumber){
             if(getMember(memberNumber) != null && getResource(title) != null){
                 if(isAvailable(title)){
                     Loan loan = new Loan(getMember(memberNumber), getResource(title));

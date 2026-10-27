@@ -1,13 +1,18 @@
+import java.awt.*;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 public class Library {
-    private ArrayList<Resource> resources = new ArrayList<>();
-    private ArrayList<Member> members = new ArrayList<>();
-    private ArrayList<Loan> loans = new ArrayList<>();
+    private final List<Resource> resources;
+    private final List<Member> members;
+    private final List<Loan> loans;
 
-    public Library() {
+    public Library(List<Resource> resources, List<Member> members) {
 
+        this.resources = resources;
+        this.members = members;
+        this.loans = new ArrayList<>();
     }
 
     //Add functions
@@ -69,7 +74,7 @@ public class Library {
         return true;
     }
 
-        public LoanResult loanMaterial(String title, int memberNumber){
+    public LoanResult loanMaterial(String title, int memberNumber){
             if(getMember(memberNumber) != null && getResource(title) != null){
                 if(isAvailable(title)){
                     Loan loan = new Loan(getMember(memberNumber), getResource(title));

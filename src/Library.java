@@ -8,7 +8,7 @@ public class Library {
     private final List<Member> members;
     private final List<Loan> loans;
 
-    public Library(List<Resource> resources, List<Member> members) {
+    public Library(List<Resource> resources, List<Member> members, LoanPolicy loanPolicy, LoanPolicy aalborgLoanPolicy, LoanPolicy bornholmLoanPolicy) {
 
         this.resources = resources;
         this.members = members;
@@ -37,7 +37,7 @@ public class Library {
         loans.add(loan);
     }
 
-    public ArrayList<Loan> getLoans() {
+    public List<Loan> getLoans() {
         return loans;
     }
 

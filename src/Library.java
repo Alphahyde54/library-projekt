@@ -37,6 +37,9 @@ public class Library {
         loans.add(loan);
     }
 
+    public ArrayList<Loan> getLoans() {
+        return loans;
+    }
 
     // Lists
     public Resource getResource(String title) {

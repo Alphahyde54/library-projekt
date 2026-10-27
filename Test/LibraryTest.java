@@ -2,6 +2,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class LibraryTest {
@@ -13,9 +16,10 @@ class LibraryTest {
 
     @BeforeEach
     void setUp(){
-         library = new Library();
-         book1 = new Book("9781492072508", "Think Java", "Allan B. Downey", 326);
-         member1 = new Member("Daniel", 1234);
+        List<Member> members = List.of(new Member("Daniel", 1234));
+        List<Resource> resources = List.of(new Book("9781492072508", "Think Java", "Allan B. Downey", 326));
+        List<Loan> loans = List.of();
+        library = new Library(resources, members, loans);
          title = "Think Java";
          memberID = 1234;
          library.addMember(member1);

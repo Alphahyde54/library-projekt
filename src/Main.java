@@ -22,8 +22,10 @@ void main() {
     new Member("Loke", 4567),
     new Member("Lucas", 7890)
     );
-
-    Library library = new Library(resources, members);
+    LoanPolicy loanPolicy = new StandardLoanPolicy();
+    LoanPolicy aalborgLoanPolicy = new AalborgLoanPolicy();
+    LoanPolicy bornholmLoanPolicy = new BornholmLoanPolicy();
+    Library library = new Library(resources, members, loanPolicy, aalborgLoanPolicy, bornholmLoanPolicy);
     ConsoleUI consoleUI = new ConsoleUI(library);
     consoleUI.run();
 }

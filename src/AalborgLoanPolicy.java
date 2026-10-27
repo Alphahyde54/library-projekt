@@ -2,6 +2,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class AalborgLoanPolicy implements LoanPolicy {
+    LocalDate borrowedDate;
     @Override
     public boolean canLoan(int memberID, String title, List<Loan> currentLoans){
         int maxLimit = 0;
@@ -25,8 +26,9 @@ public class AalborgLoanPolicy implements LoanPolicy {
 // DU kan kun låne 3 videospil eller film af gangen
     }
     @Override
-    public LocalDate calculateDueDate(Resource resource, LocalDate loanDate){
-        return loanDate.plusDays(30);
+    public LocalDate calculateDueDate(Resource resource){
+        borrowedDate = LocalDate.now();
+        return borrowedDate.plusDays(30);
 // Låne max 30 dage
     }
 }

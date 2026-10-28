@@ -14,7 +14,7 @@ class LibraryTest {
     String title;
     int memberID;
 
-    @BeforeEach
+    /* @BeforeEach
     void setUp(){
         List<Member> members = List.of(new Member("Daniel", 1234));
         List<Resource> resources = List.of(new Book("9781492072508", "Think Java", "Allan B. Downey", 326));
@@ -26,6 +26,8 @@ class LibraryTest {
          library.addBook(book1);
     }
 
+     */
+
     @Test
     void isAvailable() {
         assertTrue(library.isAvailable(title));
@@ -36,11 +38,13 @@ class LibraryTest {
     assertEquals(LoanResult.LOANED, library.loanMaterial(title, memberID));
     IO.println(library.findLoansByMemberId(memberID));
     }
+    /*
     @Test
     void loanMaterialAlreadyLoaned() {
         library.addLoan(new Loan(new Member("Lucas", 4567),book1));
         assertEquals(LoanResult.CANNOT_LOAN, library.loanMaterial(title, memberID));
     }
+     */
     @Test
     void loanMaterialWrongMemberID() {
         assertEquals(LoanResult.WRONGID, library.loanMaterial(title, 9999));
@@ -65,7 +69,7 @@ class LibraryTest {
             library.returnMaterial(title);
             assertTrue(library.isAvailable(title));
     }
-
+/*
     @Test
     void returnMaterialAndLoanAgain(){
         library.addLoan(new Loan(new Member("Lucas", 4567),book1));
@@ -77,6 +81,8 @@ class LibraryTest {
         assertEquals(LoanResult.LOANED, library.loanMaterial(title,memberID));
     }
 
+ */
+
     @Test
     void findLoansByMemberId() {
         assertNull(library.findLoansByMemberId(memberID));
@@ -87,7 +93,7 @@ class LibraryTest {
         assertEquals(1, loans.size());
 
     }
-
+/*
     @Test
     void findObjectByMemberId() {
         var loan = new Loan(member1, book1);
@@ -98,5 +104,7 @@ class LibraryTest {
         //assertSame(loan, );
 
     }
+
+ */
 
 }

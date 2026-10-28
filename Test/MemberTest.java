@@ -5,7 +5,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class MemberTest {
     @Test
     void testGetID(){
-        Member member = new Member("Daniel", 1234);
+        LoanPolicy aalborg = new AalborgLoanPolicy();
+        Member member = new Member("Daniel", 1234, aalborg);
 
         int memberId = member.getID();
 

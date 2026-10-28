@@ -3,12 +3,12 @@ import java.time.LocalDate;
 public class Loan {
     Resource resource;
     Member member;
-    LocalDate borrowedDate;
+    LocalDate dueDate;
 
     public Loan(Member member, Resource resource, LocalDate dueDate) {
         this.member = member;
         this.resource = resource;
-        this.borrowedDate = LocalDate.now();
+        this.dueDate = dueDate;
     }
 
     public Resource getResource() {
@@ -19,12 +19,15 @@ public class Loan {
         return member;
     }
 
+    public LocalDate getDueDate() {
+        return dueDate;
+    }
 
-    public String toString(LocalDate dueDate){
+    public String toString(){
         return String.format("""
                 %s
                 %s
                 Afleveringsfrist: %s
-                """, resource, member, dueDate);
+                """, resource, member, getDueDate());
     }
 }

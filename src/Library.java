@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -7,12 +8,14 @@ public class Library {
     private final List<Resource> resources;
     private final List<Member> members;
     private final List<Loan> loans;
+    private LoanPolicy loanPolicy;
 
-    public Library(List<Resource> resources, List<Member> members, LoanPolicy loanPolicy, LoanPolicy aalborgLoanPolicy, LoanPolicy bornholmLoanPolicy) {
+    public Library(List<Resource> resources, List<Member> members, LoanPolicy loanPolicy) {
 
         this.resources = resources;
         this.members = members;
         this.loans = new ArrayList<>();
+        this.loanPolicy = loanPolicy;
     }
 
     //Add functions
@@ -40,7 +43,6 @@ public class Library {
     public List<Loan> getLoans() {
         return loans;
     }
-
     // Lists
     public Resource getResource(String title) {
         if(title.trim().isEmpty()){
@@ -76,7 +78,29 @@ public class Library {
         }
         return true;
     }
-
+    public void setLoanPolicy(LoanPolicy newPolicy) {
+        this.loanPolicy = newPolicy;
+    }
+    public LoanResult loanMaterial(String title, int memberNumber){
+        LoanPolicy membersPolicy = getMember(memberNumber).getBibliotek();
+        if (getMember(memberNumber) == null){
+            return LoanResult.WRONGID;
+        }
+        if (getResource(title) == null){
+            return LoanResult.WRONGTITEL;
+        }
+        if (!isAvailable(title)){
+            return LoanResult.CANNOT_LOAN;
+        }
+        if (!membersPolicy.canLoan(memberNumber, title, loans)){
+            return LoanResult.CANNOT_LOAN_MORE;
+        }
+        LocalDate dueDate = membersPolicy.calculateDueDate(getResource(title));
+        Loan loan = new Loan(getMember(memberNumber), getResource(title), dueDate);
+        addLoan(loan);
+        return LoanResult.SUCCESS;
+    }
+    /*
     public LoanResult loanMaterial(String title, int memberNumber){
             if(getMember(memberNumber) != null && getResource(title) != null){
                 if(isAvailable(title)){
@@ -93,6 +117,8 @@ public class Library {
             }
             return LoanResult.ERROR;
         }
+
+     */
 
         public void returnMaterial(String title){
             for (int i = 0 ; i < loans.size() ; i++) {

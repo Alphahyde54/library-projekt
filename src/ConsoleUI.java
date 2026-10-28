@@ -40,10 +40,12 @@ public class ConsoleUI {
        String title = (IO.readln("Hvilket materiale vil du låne? "));
 
        switch(library.loanMaterial(title, memberNumber)){
-           case LOANED -> IO.println("Du har nu lånt: " + library.getResource(title));
+           case SUCCESS -> IO.println("Du har nu lånt: " + library.getResource(title));
            case CANNOT_LOAN -> IO.println("Du kan ikke låne det valgte materiale");
            case WRONGID -> IO.println("Du har indtastet et ID, som ikke er registreret i systemet");
            case WRONGTITEL -> IO.println("Du har indtastet en titel som ikke eksistere");
+           case CANNOT_LOAN_MORE -> IO.println("Du kan ikke låne " + library.getResource(title) +
+                   "da man kun må have op til 3 film og/eller videospil lånt på samme tid");
            case ERROR -> IO.println("Der er sket en fejl...");
        }
     }

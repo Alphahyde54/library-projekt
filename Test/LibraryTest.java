@@ -30,13 +30,25 @@ class LibraryTest {
 
     @Test
     void isAvailable() {
-        assertTrue(library.isAvailable(title));
+        final List<Resource> resources = List.of();
+        final List<Member> members = List.of();
+        LoanPolicy loanPolicy = new StandardLoanPolicy();
+        Library library1 = new Library(resources, members, loanPolicy);
+        assertTrue(library1.isAvailable(title));
     }
 
     @Test
     void loanMaterialTrue() {
-    assertEquals(LoanResult.SUCCESS, library.loanMaterial(title, memberID));
-    IO.println(library.findLoansByMemberId(memberID));
+        LoanPolicy loanPolicy = new StandardLoanPolicy();
+        final List<Resource> resources = List.of(
+                new Movie("5701234567890", "Interstellar", "Christopher nolan", 169)
+        );
+        final List<Member> members = List.of(
+                new Member("Lucas", 1212, loanPolicy)
+        );
+        Library library1 = new Library(resources, members, loanPolicy);
+        assertEquals(LoanResult.SUCCESS, library1.loanMaterial(title, memberID));
+        IO.println(library1.findLoansByMemberId(memberID));
     }
     /*
     @Test

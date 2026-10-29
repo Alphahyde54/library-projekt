@@ -14,19 +14,18 @@ class LibraryTest {
     String title;
     int memberID;
 
-    /* @BeforeEach
+    @BeforeEach
     void setUp(){
-        List<Member> members = List.of(new Member("Daniel", 1234));
-        List<Resource> resources = List.of(new Book("9781492072508", "Think Java", "Allan B. Downey", 326));
+        LoanPolicy loanPolicy = new StandardLoanPolicy();
+        LoanPolicy aalborgLoanPolicy = new AalborgLoanPolicy();
+        List<Member> members = List.of(new Member("Daniel", 1234, aalborgLoanPolicy));
+        book1 = new Book("9781492072508", "Think Java", "Allan B. Downey", 326);
+        List<Resource> resources = List.of(book1);
         List<Loan> loans = List.of();
-        library = new Library(resources, members, loans);
+        library = new Library(resources, members,loanPolicy);
          title = "Think Java";
          memberID = 1234;
-         library.addMember(member1);
-         library.addBook(book1);
     }
-
-     */
 
     @Test
     void isAvailable() {
@@ -69,19 +68,18 @@ class LibraryTest {
             library.returnMaterial(title);
             assertTrue(library.isAvailable(title));
     }
-/*
+
     @Test
     void returnMaterialAndLoanAgain(){
-        library.addLoan(new Loan(new Member("Lucas", 4567),book1));
+        LoanPolicy loanPolicy = new StandardLoanPolicy();
+        library.addLoan(new Loan(new Member("Lucas", 4567, loanPolicy),book1, loanPolicy.calculateDueDate(book1)));
         assertFalse(library.isAvailable(title));
 
         library.returnMaterial(title);
         assertTrue(library.isAvailable(title));
 
-        assertEquals(LoanResult.LOANED, library.loanMaterial(title,memberID));
+        assertEquals(LoanResult.SUCCESS, library.loanMaterial(title,memberID));
     }
-
- */
 
     @Test
     void findLoansByMemberId() {

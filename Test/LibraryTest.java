@@ -38,16 +38,17 @@ class LibraryTest {
 
     @Test
     void loanMaterialTrue() {
-        LoanPolicy loanPolicy = new StandardLoanPolicy();
-        final List<Resource> resources = List.of(
-                new Movie("5701234567890", "Interstellar", "Christopher nolan", 169)
-        );
-        final List<Member> members = List.of(
-                new Member("Lucas", 1212, loanPolicy)
-        );
-        Library library1 = new Library(resources, members, loanPolicy);
-        assertEquals(LoanResult.SUCCESS, library1.loanMaterial(title, memberID));
-        IO.println(library1.findLoansByMemberId(memberID));
+        LoanPolicy standardLoanPolicy = new StandardLoanPolicy();
+        Member member = new Member("Daniel", 1234, standardLoanPolicy);
+        Movie movie = new Movie("5701234567890", "Interstellar", "Christopher nolan", 169);
+
+        List<Member> member2 = List.of(member);
+        List<Resource> movie2 = List.of(movie);
+        Library library = new Library(movie2, member2, standardLoanPolicy);
+
+        LoanResult result = library.loanMaterial("Interstellar", 1234);
+
+        assertEquals(LoanResult.SUCCESS, result);
     }
     /*
     @Test

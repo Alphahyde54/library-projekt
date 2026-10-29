@@ -68,7 +68,15 @@ class LibraryTest {
 
     @Test
     void tjekHvisFejlIngenAtIngenLånOprettet(){
-        library.loanMaterial(title,9999);
+        LoanPolicy standardLoanPolicy = new StandardLoanPolicy();
+        Member member = new Member("Daniel", 1234, standardLoanPolicy);
+        Movie movie = new Movie("5701234567890", "Interstellar", "Christopher nolan", 169);
+
+        List<Member> member2 = List.of(member);
+        List<Resource> movie2 = List.of(movie);
+        Library library = new Library(movie2, member2, standardLoanPolicy);
+
+        library.loanMaterial(title,1234);
         assertTrue(library.isAvailable(title));
         assertNull(library.findLoansByMemberId(memberID));
     }

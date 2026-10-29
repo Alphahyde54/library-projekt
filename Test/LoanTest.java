@@ -3,43 +3,43 @@ import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.*;
 
 class LoanTest {
-    /*
+
     @Test
     void testGetResource() {
-        Member member = new Member("Daniel", 1234);
+        LoanPolicy aalborgLoanPolicy = new AalborgLoanPolicy();
+        LocalDate dueDate = LocalDate.now();
+        Member member = new Member("Daniel", 1234, aalborgLoanPolicy);
         Resource movie = new Movie("5701234567890", "Interstellar", "Christopher nolan", 169);
 
-        Loan loan = new Loan(member, movie);
+        Loan loan = new Loan(member, movie, dueDate);
 
         assertSame(movie, loan.getResource());
         assertNotNull(loan.getResource());
     }
-     */
-/*
+
     @Test
     void testGetMember() {
-        Member member = new Member("Daniel", 1234);
+        LoanPolicy aalborgLoanPolicy = new AalborgLoanPolicy();
+        LocalDate dueDate = LocalDate.now();
+        Member member = new Member("Daniel", 1234, aalborgLoanPolicy);
         Resource movie = new Movie("5701234567890", "Interstellar", "Christopher nolan", 169);
 
-        Loan loan = new Loan(member, movie);
+        Loan loan = new Loan(member, movie, dueDate);
 
         assertSame(member, loan.getMember());
         assertNotNull(loan.getMember());
     }
- */
-/*
     @Test
     void testGetDueDate() {
-        Member member = new Member("Daniel", 1234);
+        LoanPolicy standardLoanPolicy = new StandardLoanPolicy();
+        Member member = new Member("Daniel", 1234, standardLoanPolicy);
         Resource movie = new Movie("5701234567890", "Interstellar", "Christopher nolan", 169);
 
-        Loan loan = new Loan(member, movie);
-
         LocalDate expectedDueDate = LocalDate.now().plusDays(14);
+
+        Loan loan = new Loan(member, movie, expectedDueDate);
 
         assertEquals(expectedDueDate, loan.getDueDate());
         assertNotNull(loan.getDueDate());
     }
-
- */
 }

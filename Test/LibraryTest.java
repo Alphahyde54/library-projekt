@@ -18,7 +18,8 @@ class LibraryTest {
     void setUp(){
         LoanPolicy loanPolicy = new StandardLoanPolicy();
         LoanPolicy aalborgLoanPolicy = new AalborgLoanPolicy();
-        List<Member> members = List.of(new Member("Daniel", 1234, aalborgLoanPolicy));
+        member1 = new Member("Daniel", 1234, aalborgLoanPolicy);
+        List<Member> members = List.of(member1);
         book1 = new Book("9781492072508", "Think Java", "Allan B. Downey", 326);
         List<Resource> resources = List.of(book1);
         List<Loan> loans = List.of();
@@ -34,7 +35,7 @@ class LibraryTest {
 
     @Test
     void loanMaterialTrue() {
-    assertEquals(LoanResult.LOANED, library.loanMaterial(title, memberID));
+    assertEquals(LoanResult.SUCCESS, library.loanMaterial(title, memberID));
     IO.println(library.findLoansByMemberId(memberID));
     }
     /*

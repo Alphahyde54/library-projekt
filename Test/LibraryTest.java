@@ -16,27 +16,42 @@ class LibraryTest {
 
     /* @BeforeEach
     void setUp(){
-        List<Member> members = List.of(new Member("Daniel", 1234));
-        List<Resource> resources = List.of(new Book("9781492072508", "Think Java", "Allan B. Downey", 326));
+        LoanPolicy loanPolicy = new StandardLoanPolicy();
+        LoanPolicy aalborgLoanPolicy = new AalborgLoanPolicy();
+        member1 = new Member("Daniel", 1234, aalborgLoanPolicy);
+        List<Member> members = List.of(member1);
+        book1 = new Book("9781492072508", "Think Java", "Allan B. Downey", 326);
+        List<Resource> resources = List.of(book1);
         List<Loan> loans = List.of();
-        library = new Library(resources, members, loans);
+        library = new Library(resources, members,loanPolicy);
          title = "Think Java";
          memberID = 1234;
-         library.addMember(member1);
-         library.addBook(book1);
     }
 
      */
 
     @Test
     void isAvailable() {
-        assertTrue(library.isAvailable(title));
+        final List<Resource> resources = List.of();
+        final List<Member> members = List.of();
+        LoanPolicy loanPolicy = new StandardLoanPolicy();
+        Library library1 = new Library(resources, members, loanPolicy);
+        assertTrue(library1.isAvailable(title));
     }
 
     @Test
     void loanMaterialTrue() {
-    assertEquals(LoanResult.LOANED, library.loanMaterial(title, memberID));
-    IO.println(library.findLoansByMemberId(memberID));
+        LoanPolicy standardLoanPolicy = new StandardLoanPolicy();
+        Member member = new Member("Daniel", 1234, standardLoanPolicy);
+        Movie movie = new Movie("5701234567890", "Interstellar", "Christopher nolan", 169);
+
+        List<Member> member2 = List.of(member);
+        List<Resource> movie2 = List.of(movie);
+        Library library = new Library(movie2, member2, standardLoanPolicy);
+
+        LoanResult result = library.loanMaterial("Interstellar", 1234);
+
+        assertEquals(LoanResult.SUCCESS, result);
     }
     /*
     @Test
@@ -56,7 +71,15 @@ class LibraryTest {
 
     @Test
     void tjekHvisFejlIngenAtIngenLånOprettet(){
-        library.loanMaterial(title,9999);
+        LoanPolicy standardLoanPolicy = new StandardLoanPolicy();
+        Member member = new Member("Daniel", 1234, standardLoanPolicy);
+        Movie movie = new Movie("5701234567890", "Interstellar", "Christopher nolan", 169);
+
+        List<Member> member2 = List.of(member);
+        List<Resource> movie2 = List.of(movie);
+        Library library = new Library(movie2, member2, standardLoanPolicy);
+
+        library.loanMaterial(title,1234);
         assertTrue(library.isAvailable(title));
         assertNull(library.findLoansByMemberId(memberID));
     }
@@ -72,13 +95,14 @@ class LibraryTest {
 /*
     @Test
     void returnMaterialAndLoanAgain(){
-        library.addLoan(new Loan(new Member("Lucas", 4567),book1));
+        LoanPolicy loanPolicy = new StandardLoanPolicy();
+        library.addLoan(new Loan(new Member("Lucas", 4567, loanPolicy),book1, loanPolicy.calculateDueDate(book1)));
         assertFalse(library.isAvailable(title));
 
         library.returnMaterial(title);
         assertTrue(library.isAvailable(title));
 
-        assertEquals(LoanResult.LOANED, library.loanMaterial(title,memberID));
+        assertEquals(LoanResult.SUCCESS, library.loanMaterial(title,memberID));
     }
 
  */

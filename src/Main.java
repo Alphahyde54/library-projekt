@@ -1,7 +1,5 @@
 void main() {
     LoanPolicy loanPolicy = new StandardLoanPolicy();
-    LoanPolicy aalborgLoanPolicy = new AalborgLoanPolicy();
-    LoanPolicy bornholmLoanPolicy = new BornholmLoanPolicy();
 
     Path path = Path.of("C:\\Users\\danie\\OneDrive - Erhvervsakademi København\\Dokumenter\\2026-10-20,Programmering,10.csv");
     CsvMapper csvMapper = new CsvMapper();

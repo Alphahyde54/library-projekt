@@ -75,11 +75,7 @@ public class Library {
         }
         return true;
     }
-    public void setLoanPolicy(LoanPolicy newPolicy) {
-        this.loanPolicy = newPolicy;
-    }
     public LoanResult loanMaterial(String title, int memberNumber){
-        LoanPolicy membersPolicy = getMember(memberNumber);
         if (getMember(memberNumber) == null){
             return LoanResult.WRONGID;
         }
@@ -89,10 +85,11 @@ public class Library {
         if (!isAvailable(title)){
             return LoanResult.CANNOT_LOAN;
         }
-        if (!membersPolicy.canLoan(memberNumber, title, loans)){
+        LoanPolicy currentPolicy = this.loanPolicy;
+        if (!currentPolicy.canLoan(memberNumber, title, loans)){
             return LoanResult.CANNOT_LOAN_MORE;
         }
-        LocalDate dueDate = membersPolicy.calculateDueDate(getResource(title));
+        LocalDate dueDate = currentPolicy.calculateDueDate(getResource(title));
         Loan loan = new Loan(getMember(memberNumber), getResource(title), dueDate);
         addLoan(loan);
         return LoanResult.SUCCESS;
@@ -169,5 +166,23 @@ public class Library {
             for(Loan loan : loans){
                 IO.println(loan);
             }
+        }
+        public LoanPolicy setPolicy(String name){
+            LoanPolicy standardLoanPolicy = new StandardLoanPolicy();
+            LoanPolicy aalborgLoanPolicy = new AalborgLoanPolicy();
+            LoanPolicy bornholmLoanPolicy = new BornholmLoanPolicy();
+            String cleanName = name.toLowerCase().trim();
+            if (cleanName.contains("Aalborg".toLowerCase().trim())){
+                this.loanPolicy = aalborgLoanPolicy;
+            }
+             else if (cleanName.contains("Bornholm".toLowerCase().trim())){
+                this.loanPolicy = bornholmLoanPolicy;
+            } else {
+                this.loanPolicy = standardLoanPolicy;
+            }
+            return this.loanPolicy;
+        }
+        public LoanPolicy getPolicy() {
+            return this.loanPolicy;
         }
 }

@@ -2,7 +2,6 @@ public class Member {
     final String navn;
     final int memberNumber;
 
-
     public Member(String navn, int memberNumber){
         this.navn = navn;
         this.memberNumber = memberNumber;

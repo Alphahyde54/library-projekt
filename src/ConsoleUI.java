@@ -14,9 +14,10 @@ public class ConsoleUI {
             showMenu();
             int choice = Integer.parseInt(IO.readln("Indtast valg: "));
             switch (choice){
-                case 1 -> borrowBook();
-                case 2 -> returnMaterial();
-                case 3 -> showLoans();
+                case 1 -> setPolicy();
+                case 2 -> borrowBook();
+                case 3 -> returnMaterial();
+                case 4 -> showLoans();
                 case 0 -> running = false;
                 default -> IO.println("Lån");
             }
@@ -27,9 +28,10 @@ public class ConsoleUI {
 
     private void showMenu(){
         IO.println();
-        IO.println("1. Lån");
-        IO.println("2. Aflever");
-        IO.println("3. Vis alle lån");
+        IO.println("1. Vælg bibliotek");
+        IO.println("2. Lån");
+        IO.println("3. Aflever");
+        IO.println("4. Vis alle lån");
         IO.println("0. Afslut");
         IO.println();
     }
@@ -63,5 +65,14 @@ public class ConsoleUI {
         } else {
             IO.println("Det indtastede medlemsnummer har ingen aktive lån.");
         }
+    }
+    public void setPolicy(){
+        IO.println("--- VÆLG BIBLIOTEK ---");
+        IO.println("Københavns Bibliotek");
+        IO.println("Aalborgs Bibliotek");
+        IO.println("Bornholms Bibliotek");
+        String bibliotek = IO.readln("Vælg bibliotek");
+        LoanPolicy valgtBibliotek = library.setPolicy(bibliotek);
+        IO.println("Du har valgt " + library.getPolicy());
     }
 }

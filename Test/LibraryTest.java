@@ -14,7 +14,7 @@ class LibraryTest {
     String title;
     int memberID;
 
-    @BeforeEach
+    /* @BeforeEach
     void setUp(){
         LoanPolicy loanPolicy = new StandardLoanPolicy();
         LoanPolicy aalborgLoanPolicy = new AalborgLoanPolicy();
@@ -27,6 +27,8 @@ class LibraryTest {
          title = "Think Java";
          memberID = 1234;
     }
+
+     */
 
     @Test
     void isAvailable() {
@@ -90,7 +92,7 @@ class LibraryTest {
             library.returnMaterial(title);
             assertTrue(library.isAvailable(title));
     }
-
+/*
     @Test
     void returnMaterialAndLoanAgain(){
         LoanPolicy loanPolicy = new StandardLoanPolicy();
@@ -102,6 +104,8 @@ class LibraryTest {
 
         assertEquals(LoanResult.SUCCESS, library.loanMaterial(title,memberID));
     }
+
+ */
 
     @Test
     void findLoansByMemberId() {

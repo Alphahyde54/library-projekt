@@ -21,4 +21,9 @@ public class BornholmLoanPolicy implements LoanPolicy {
         return borrowedDate.plusDays(30);
     // Lydbøger kan maks lånes i 14 dage
     }
+    @Override
+    public String toString() {
+        return "Bornholms Bibliotek";
+    }
+
 }

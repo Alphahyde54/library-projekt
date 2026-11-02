@@ -18,6 +18,10 @@ public class StandardLoanPolicy implements LoanPolicy {
             return borrowedDate.plusDays(30);
         // Låne max 30 dage
         }
+    @Override
+    public String toString() {
+        return "Københavns Bibliotek";
+    }
 
 }
 

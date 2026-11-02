@@ -6,7 +6,7 @@ class MemberTest {
     @Test
     void testGetID(){
         LoanPolicy aalborg = new AalborgLoanPolicy();
-        Member member = new Member("Daniel", 1234, aalborg);
+        Member member = new Member("Daniel", 1234);
 
         int memberId = member.getID();
 

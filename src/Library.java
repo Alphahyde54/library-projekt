@@ -10,11 +10,11 @@ public class Library {
     private final List<Loan> loans;
     private LoanPolicy loanPolicy;
 
-    public Library(List<Resource> resources, List<Member> members, LoanPolicy loanPolicy) {
+    public Library(List<Resource> resources, List<Member> members, LoanPolicy loanPolicy, List<Loan> loans) {
 
         this.resources = resources;
         this.members = members;
-        this.loans = new ArrayList<>();
+        this.loans = loans;
         this.loanPolicy = loanPolicy;
     }
 
@@ -56,9 +56,6 @@ public class Library {
         return null;
     }
 
-        public Loan getLoan (int index){
-            return loans.get(index);
-        }
 
         public Member getMember (int memberNumber) {
             for (int i = 0; i < members.size(); i++) {
@@ -82,7 +79,7 @@ public class Library {
         this.loanPolicy = newPolicy;
     }
     public LoanResult loanMaterial(String title, int memberNumber){
-        LoanPolicy membersPolicy = getMember(memberNumber).getBibliotek();
+        LoanPolicy membersPolicy = getMember(memberNumber);
         if (getMember(memberNumber) == null){
             return LoanResult.WRONGID;
         }

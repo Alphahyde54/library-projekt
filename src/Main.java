@@ -1,7 +1,5 @@
 void main() {
     LoanPolicy loanPolicy = new StandardLoanPolicy();
-    LoanPolicy aalborgLoanPolicy = new AalborgLoanPolicy();
-    LoanPolicy bornholmLoanPolicy = new BornholmLoanPolicy();
 
     List<Resource> resources = List.of(
     new Book("9781492072508", "Think Java", "Allan B. Downey", 326),
@@ -22,9 +20,9 @@ void main() {
     );
 
     List<Member> members = List.of(
-    new Member("Daniel", 1234, aalborgLoanPolicy),
-    new Member("Loke", 9999, bornholmLoanPolicy),
-    new Member("Lucas", 1212, loanPolicy)
+    new Member("Daniel", 1234),
+    new Member("Loke", 9999),
+    new Member("Lucas", 1212)
     );
     Library library = new Library(resources, members, loanPolicy);
     ConsoleUI consoleUI = new ConsoleUI(library);

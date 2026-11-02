@@ -42,7 +42,7 @@ class LibraryTest {
     @Test
     void loanMaterialTrue() {
         LoanPolicy standardLoanPolicy = new StandardLoanPolicy();
-        Member member = new Member("Daniel", 1234, standardLoanPolicy);
+        Member member = new Member("Daniel", 1234);
         Movie movie = new Movie("5701234567890", "Interstellar", "Christopher nolan", 169);
 
         List<Member> member2 = List.of(member);
@@ -72,7 +72,7 @@ class LibraryTest {
     @Test
     void tjekHvisFejlIngenAtIngenLånOprettet(){
         LoanPolicy standardLoanPolicy = new StandardLoanPolicy();
-        Member member = new Member("Daniel", 1234, standardLoanPolicy);
+        Member member = new Member("Daniel", 1234);
         Movie movie = new Movie("5701234567890", "Interstellar", "Christopher nolan", 169);
 
         List<Member> member2 = List.of(member);

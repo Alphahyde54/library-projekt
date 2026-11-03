@@ -35,7 +35,7 @@ class LibraryTest {
         final List<Resource> resources = List.of();
         final List<Member> members = List.of();
         LoanPolicy loanPolicy = new StandardLoanPolicy();
-        Library library1 = new Library(resources, members, loanPolicy);
+        Library library1 = new Library(resources, members, loanPolicy, new ArrayList<>());
         assertTrue(library1.isAvailable(title));
     }
 
@@ -47,7 +47,7 @@ class LibraryTest {
 
         List<Member> member2 = List.of(member);
         List<Resource> movie2 = List.of(movie);
-        Library library = new Library(movie2, member2, standardLoanPolicy);
+        Library library = new Library(movie2, member2, standardLoanPolicy, new ArrayList<>());
 
         LoanResult result = library.loanMaterial("Interstellar", 1234);
 
@@ -62,11 +62,18 @@ class LibraryTest {
      */
     @Test
     void loanMaterialWrongMemberID() {
+        Book book = new Book("9781492072508", "Think Java", "Allan B. Downey", 326);
+        Member member = new Member("Daniel", 1234);
+        Library library = new Library(List.of(book), List.of(member), new StandardLoanPolicy(), new ArrayList<>());
+
         assertEquals(LoanResult.WRONGID, library.loanMaterial(title, 9999));
     }
     @Test
     void loanMaterialWrongTitel() {
-        assertEquals(LoanResult.WRONGTITEL, library.loanMaterial("Suicide Squad", memberID));
+        Book book = new Book("9781492072508", "Think Java", "Allan B. Downey", 326);
+        Member member = new Member("Daniel", 1234);
+        Library library = new Library(List.of(book), List.of(member), new StandardLoanPolicy(), new ArrayList<>());
+        assertEquals(LoanResult.WRONGTITEL, library.loanMaterial("Suicide Squad", 1234));
     }
 
     @Test
@@ -77,7 +84,7 @@ class LibraryTest {
 
         List<Member> member2 = List.of(member);
         List<Resource> movie2 = List.of(movie);
-        Library library = new Library(movie2, member2, standardLoanPolicy);
+        Library library = new Library(movie2, member2, standardLoanPolicy, new ArrayList<>());
 
         library.loanMaterial(title,1234);
         assertTrue(library.isAvailable(title));
@@ -86,11 +93,21 @@ class LibraryTest {
 
     @Test
     void returnMaterial() {
-            library.loanMaterial(title, memberID);
-            assertFalse(library.isAvailable(title));
+        Book book = new Book("9781492072508", "Think Java", "Allan B. Downey", 326);
+        Member member = new Member("Daniel", 1234);
+        Library library = new Library(List.of(book), List.of(member), new StandardLoanPolicy(), new ArrayList<>());
 
-            library.returnMaterial(title);
-            assertTrue(library.isAvailable(title));
+        library.loanMaterial("Think Java", 1234);
+        assertFalse(library.isAvailable("Think Java"));
+
+        library.returnMaterial("Think Java");
+        assertTrue(library.isAvailable("Think Java"));
+
+//            library.loanMaterial(title, memberID);
+//            assertFalse(library.isAvailable(title));
+//
+//            library.returnMaterial(title);
+//            assertTrue(library.isAvailable(title));
     }
 /*
     @Test
@@ -109,12 +126,16 @@ class LibraryTest {
 
     @Test
     void findLoansByMemberId() {
-        assertNull(library.findLoansByMemberId(memberID));
+        Book book = new Book("9781492072508", "Think Java", "Allan B. Downey", 326);
+        Member member = new Member("Daniel", 1234);
+        Library library = new Library(List.of(book), List.of(member), new StandardLoanPolicy(), new ArrayList<>());
+        assertNull(library.findLoansByMemberId(1234));
 
-        library.loanMaterial(title, memberID);
+        assertNull(library.findLoansByMemberId(1234));
 
-        var loans = library.findLoansByMemberId(memberID);
-        assertEquals(1, loans.size());
+        library.loanMaterial("Think Java", 1234);
+
+        assertEquals(1, library.findLoansByMemberId(1234).size());
 
     }
 /*

@@ -11,7 +11,7 @@ class LoanTest {
         Member member = new Member("Daniel", 1234);
         Resource movie = new Movie("5701234567890", "Interstellar", "Christopher nolan", 169);
 
-        Loan loan = new Loan(member, movie, dueDate);
+        Loan loan = new Loan(member, movie, LocalDate.now(), dueDate);
 
         assertSame(movie, loan.getResource());
         assertNotNull(loan.getResource());
@@ -24,7 +24,7 @@ class LoanTest {
         Member member = new Member("Daniel", 1234);
         Resource movie = new Movie("5701234567890", "Interstellar", "Christopher nolan", 169);
 
-        Loan loan = new Loan(member, movie, dueDate);
+        Loan loan = new Loan(member, movie, LocalDate.now(), dueDate);
 
         assertSame(member, loan.getMember());
         assertNotNull(loan.getMember());
@@ -37,7 +37,7 @@ class LoanTest {
 
         LocalDate expectedDueDate = LocalDate.now().plusDays(14);
 
-        Loan loan = new Loan(member, movie, expectedDueDate);
+        Loan loan = new Loan(member, movie, LocalDate.now(), expectedDueDate);
 
         assertEquals(expectedDueDate, loan.getDueDate());
         assertNotNull(loan.getDueDate());

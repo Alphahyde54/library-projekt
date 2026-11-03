@@ -5,9 +5,9 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class LibrarySaverTest {
+class LibraryComparatorTest {
     @Test
-    void creatorComparatoeSortsByCreatorthenTitle(){
+    void creatorComparatorSortsByCreatorAndTitle(){
         var book1 = new Book("9781492072508", "Think Java", "Allan B. Downey", 326);
         var book2 = new Book("9788763851664", "Omrids", "Rachel Cusk", 256);
         var book3 = new Book("9780062316097", "Sapiens", "Yuval Noah Harari", 466);

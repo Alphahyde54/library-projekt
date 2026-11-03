@@ -31,4 +31,9 @@ public class AalborgLoanPolicy implements LoanPolicy {
         return borrowedDate.plusDays(30);
 // Låne max 30 dage
     }
+    @Override
+    public String toString() {
+        return "Aalborgs Bibliotek";
+    }
+
 }

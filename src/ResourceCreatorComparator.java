@@ -1,11 +1,16 @@
 import java.text.Collator;
 import java.util.Comparator;
+import java.util.Locale;
 
 public class ResourceCreatorComparator implements Comparator <Resource>{
     private  final Collator collator;
 
-    public ResourceCreatorComparator(Collator collator) {
-        this.collator = collator;
+    public ResourceCreatorComparator() {
+        this(Locale.of("da"));
+    }
+
+    public ResourceCreatorComparator(Locale locale) {
+        this.collator = Collator.getInstance(locale);
     }
 
     @Override

@@ -1,30 +1,44 @@
 void main() {
     LoanPolicy loanPolicy = new StandardLoanPolicy();
 
-    List<Resource> resources = List.of(
-    new Book("9781492072508", "Think Java", "Allan B. Downey", 326),
-    new Book("9788763851664", "Omrids", "Rachel Cusk", 256),
-    new Book("9780062316097", "Sapiens", "Yuval Noah Harari", 466),
+    Path path = Path.of("C:\\Users\\danie\\OneDrive - Erhvervsakademi København\\Dokumenter\\2026-10-20,Programmering,10.csv");
+    CsvMapper csvMapper = new CsvMapper();
+    CsvHandler csvHandler = new CsvHandler(path, csvMapper);
+    List<Resource> resources = new ArrayList<>();
+    List<Member> members = new ArrayList<>();
+    List<Loan> loans = new ArrayList<>();
 
-    new Movie("5701234567890", "Interstellar", "Christopher nolan", 169),
-    new Movie("6701234567891", "Good Will Hunting", "Gus Van Sant", 126),
-    new Movie("7701234567892", "Oppenheimer", "Christopher Nolan", 180),
+   try{
+       resources = csvHandler.loadResources();
+   } catch (IOException e){
+       IO.println("Fejl i loadResources");
+   }
 
-    new AudioBook("8801234567822", "The Count Of Monte Cristo", "Alexandre Dumas", 886),
-    new AudioBook("9801234567823", "Norweigan Woods", "Haruki Murakami", 384),
-    new AudioBook("6801234567824", "Red Rising", "Pierce Brown", 382),
+    try{
+        members = csvHandler.loadMembers();
+    } catch (IOException e){
+        IO.println("Fejl i loadMembers");
+    }
+    try{
+        loans = csvHandler.loadLoans(members,resources);
+    } catch (IOException e) {
+        IO.println("Fejl i loadLoans");
+    }
 
-    new VideoGame("5801234567821", "League of Legends", "Riot Games"),
-    new VideoGame("9901234567822", "Grand Theft Auto: San Andreas", "Rockstar Games"),
-    new VideoGame("2801234567855", "Call of Duty: Black Ops 2", "Activision")
-    );
 
-    List<Member> members = List.of(
-    new Member("Daniel", 1234),
-    new Member("Loke", 9999),
-    new Member("Lucas", 1212)
-    );
-    Library library = new Library(resources, members, loanPolicy);
+    csvHandler.saveResources(resources);
+    try{
+        csvHandler.saveMembers(members);
+    } catch (IOException e) {
+        IO.println("Fejl i saveMembers");
+    }
+    try{
+        csvHandler.saveLoans(loans);
+    } catch (IOException e) {
+        IO.println("Fejl i saveLoans");
+    }
+
+    Library library = new Library(resources, members, loanPolicy, loans);
     ConsoleUI consoleUI = new ConsoleUI(library);
     consoleUI.run();
 }

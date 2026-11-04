@@ -35,7 +35,8 @@ class LibraryTest {
         final List<Resource> resources = List.of();
         final List<Member> members = List.of();
         LoanPolicy loanPolicy = new StandardLoanPolicy();
-        Library library1 = new Library(resources, members, loanPolicy);
+        List<Loan> loans = List.of();
+        Library library1 = new Library(resources, members, loanPolicy, loans);
         assertTrue(library1.isAvailable(title));
     }
 
@@ -47,7 +48,8 @@ class LibraryTest {
 
         List<Member> member2 = List.of(member);
         List<Resource> movie2 = List.of(movie);
-        Library library = new Library(movie2, member2, standardLoanPolicy);
+        List<Loan> loans = List.of();
+        Library library = new Library(movie2, member2, standardLoanPolicy, loans);
 
         LoanResult result = library.loanMaterial("Interstellar", 1234);
 
@@ -77,7 +79,8 @@ class LibraryTest {
 
         List<Member> member2 = List.of(member);
         List<Resource> movie2 = List.of(movie);
-        Library library = new Library(movie2, member2, standardLoanPolicy);
+        List<Loan> loans = List.of();
+        Library library = new Library(movie2, member2, standardLoanPolicy, loans);
 
         library.loanMaterial(title,1234);
         assertTrue(library.isAvailable(title));

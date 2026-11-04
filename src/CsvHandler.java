@@ -16,8 +16,9 @@ public class CsvHandler {
     }
 
     public List<Member> loadMembers() throws IOException{
+        Path file = path.resolve("members.csv");
         List<Member> members = new ArrayList<>();
-        try(BufferedReader reader = Files.newBufferedReader(path)){
+        try(BufferedReader reader = Files.newBufferedReader(file)){
             String line;
             while((line = reader.readLine()) != null){
                 Member member = csvMapper.fromCsvMember(line);
@@ -28,8 +29,9 @@ public class CsvHandler {
     }
 
     public List<Book> loadBooks() throws IOException{
+        Path file = path.resolve("book.csv");
         List<Book> books = new ArrayList<>();
-        try(BufferedReader reader = Files.newBufferedReader(path)){
+        try(BufferedReader reader = Files.newBufferedReader(file)){
             String line;
             while((line = reader.readLine()) != null){
                 Book book = csvMapper.fromCsvBook(line);
@@ -39,8 +41,9 @@ public class CsvHandler {
         return books;
     }
     public List<AudioBook> loadAudioBooks() throws IOException{
+        Path file = path.resolve("audiobook.csv");
         List<AudioBook> audioBooks = new ArrayList<>();
-        try(BufferedReader reader = Files.newBufferedReader(path)){
+        try(BufferedReader reader = Files.newBufferedReader(file)){
             String line;
             while((line = reader.readLine()) != null){
                 AudioBook audioBook = csvMapper.fromCsvAudio(line);
@@ -50,8 +53,9 @@ public class CsvHandler {
         return audioBooks;
     }
     public List<Movie> loadMovies() throws IOException{
+        Path file = path.resolve("movie.csv");
         List<Movie> movies = new ArrayList<>();
-        try(BufferedReader reader = Files.newBufferedReader(path)){
+        try(BufferedReader reader = Files.newBufferedReader(file)){
             String line;
             while((line = reader.readLine()) != null){
                 Movie movie = csvMapper.fromCsvMovie(line);
@@ -61,8 +65,9 @@ public class CsvHandler {
         return movies;
     }
     public List<VideoGame> loadVideoGames() throws IOException{
+        Path file = path.resolve("videogame.csv");
         List<VideoGame> videoGames = new ArrayList<>();
-        try(BufferedReader reader = Files.newBufferedReader(path)){
+        try(BufferedReader reader = Files.newBufferedReader(file)){
             String line;
             while((line = reader.readLine()) != null){
                 VideoGame videoGame = csvMapper.fromCsvGame(line);
@@ -90,8 +95,9 @@ public class CsvHandler {
     }
 
     public List<Loan> loadLoans(List<Member> members, List<Resource> resources) throws IOException {
+        Path file = path.resolve("loans.csv");
         List<Loan> loans = new ArrayList<>();
-        try (BufferedReader reader = Files.newBufferedReader(path)) {
+        try (BufferedReader reader = Files.newBufferedReader(file)) {
             String line;
             while ((line = reader.readLine()) != null) {
                 loans.add(csvMapper.fromCsvLoan(line, members, resources));
@@ -101,31 +107,36 @@ public class CsvHandler {
     }
 
     public  void saveBook(Resource book)throws IOException{
-        try(BufferedWriter writer = Files.newBufferedWriter(path)){
+        Path file = path.resolve("book.csv");
+        try(BufferedWriter writer = Files.newBufferedWriter(file)){
                 writer.write(csvMapper.toCsvBook(book));
                 writer.newLine();
         }
     }
     public  void saveAudio(Resource audioBook)throws IOException{
-        try(BufferedWriter writer = Files.newBufferedWriter(path)){
+        Path file = path.resolve("audiobook.csv");
+        try(BufferedWriter writer = Files.newBufferedWriter(file)){
                 writer.write(csvMapper.toCsvAudio(audioBook));
                 writer.newLine();
         }
     }
     public  void saveMovie(Resource movie)throws IOException{
-        try(BufferedWriter writer = Files.newBufferedWriter(path)){
+        Path file = path.resolve("movie.csv");
+        try(BufferedWriter writer = Files.newBufferedWriter(file)){
                 writer.write(csvMapper.toCsvMovie(movie));
                 writer.newLine();
         }
     }
     public  void saveGame(Resource videoGame)throws IOException{
-        try(BufferedWriter writer = Files.newBufferedWriter(path)){
+        Path file = path.resolve("videogame.csv");
+        try(BufferedWriter writer = Files.newBufferedWriter(file)){
                 writer.write(csvMapper.toCsvGame(videoGame));
                 writer.newLine();
         }
     }
     public  void saveMembers(List<Member> members)throws IOException{
-        try(BufferedWriter writer = Files.newBufferedWriter(path)){
+        Path file = path.resolve("members.csv");
+        try(BufferedWriter writer = Files.newBufferedWriter(file)){
             for(Member member : members){
                 writer.write(csvMapper.toCsvMember(member));
                 writer.newLine();
@@ -133,7 +144,8 @@ public class CsvHandler {
         }
     }
     public  void saveLoans(List<Loan> loans)throws IOException{
-        try(BufferedWriter writer = Files.newBufferedWriter(path)){
+        Path file = path.resolve("loans.csv");
+        try(BufferedWriter writer = Files.newBufferedWriter(file)){
             for(Loan loan : loans){
                 writer.write(csvMapper.toCsvLoan(loan));
                 writer.newLine();

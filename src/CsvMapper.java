@@ -51,6 +51,10 @@ String delimiter = ",";
         String[] fields = line.split(delimiter, -1);
         int memberId = Integer.parseInt(fields[0]);
         String identifier = fields[1];
+        LocalDate borrowDate = LocalDate.parse(fields[2]);
+        LocalDate dueDate = LocalDate.parse(fields[3]);
+
+
 
         Member member = null;
         for (Member m : members) {
@@ -60,7 +64,7 @@ String delimiter = ",";
         for (Resource r : resources) {
             if (r.getIdentifier().equals(identifier)) resource = r;
         }
-        return new Loan(member, resource, LocalDate.parse(fields[3]));
+        return new Loan(member, resource, borrowDate, dueDate);
     }
 
 

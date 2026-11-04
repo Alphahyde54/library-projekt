@@ -90,7 +90,7 @@ public class Library {
             return LoanResult.CANNOT_LOAN_MORE;
         }
         LocalDate dueDate = currentPolicy.calculateDueDate(getResource(title));
-        Loan loan = new Loan(getMember(memberNumber), getResource(title), dueDate);
+        Loan loan = new Loan(getMember(memberNumber), getResource(title), LocalDate.now(), dueDate);
         addLoan(loan);
         return LoanResult.SUCCESS;
     }

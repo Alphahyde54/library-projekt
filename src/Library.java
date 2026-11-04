@@ -90,7 +90,7 @@ public class Library {
             return LoanResult.CANNOT_LOAN_MORE;
         }
         LocalDate dueDate = currentPolicy.calculateDueDate(getResource(title));
-        Loan loan = new Loan(getMember(memberNumber), getResource(title), dueDate);
+        Loan loan = new Loan(getMember(memberNumber), getResource(title), LocalDate.now(), dueDate);
         addLoan(loan);
         return LoanResult.SUCCESS;
     }
@@ -185,4 +185,20 @@ public class Library {
         public LoanPolicy getPolicy() {
             return this.loanPolicy;
         }
+        public List<Resource> resourcesSortedByTitle(){
+            List<Resource> resourcesSorted = new ArrayList<>(this.resources);
+            resourcesSorted.sort(new ResourceTitleComparator());
+            return resourcesSorted;
+        }
+        public List<Resource> resourcesSortedByCreator() {
+            List<Resource> resourcesSorted = new ArrayList<>(this.resources);
+            resourcesSorted.sort(new ResourceCreatorComparator());
+            return resourcesSorted;
+        }
+        public List<Loan> loansSortedByDueDate() {
+            List<Loan> sortedLoans = new ArrayList<>(this.loans);
+            sortedLoans.sort(new DueDateComparator());
+            return sortedLoans;
+        }
+        
 }

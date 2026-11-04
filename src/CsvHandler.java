@@ -7,12 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CsvHandler {
-    private final Path path;
     private final CsvMapper csvMapper;
 
-    public CsvHandler(Path path, CsvMapper csvMapper){
+    public CsvHandler(CsvMapper csvMapper){
         this.csvMapper = csvMapper;
-        this.path = path;
     }
 
     public List<Member> loadMembers() throws IOException{
@@ -77,7 +75,7 @@ public class CsvHandler {
         return videoGames;
     }
 
-    public List<Resource> loadResources() throws IOException{
+    public List<Resource> loadResources(Path path) throws IOException{
         List<Resource> resources = new ArrayList<>();
         for(VideoGame game : loadVideoGames()){
             resources.add(game);

@@ -79,18 +79,10 @@ public class CsvHandler {
 
     public List<Resource> loadResources() throws IOException{
         List<Resource> resources = new ArrayList<>();
-        for(VideoGame game : loadVideoGames()){
-            resources.add(game);
-        }
-        for(AudioBook audioBook : loadAudioBooks()){
-            resources.add(audioBook);
-        }
-        for(Book book : loadBooks()){
-            resources.add(book);
-        }
-        for(Movie movies : loadMovies()){
-            resources.add(movies);
-        }
+        resources.addAll(loadVideoGames(path.resolve("videogames.csv")));
+        resources.addAll(loadAudioBooks(path.resolve("audiobook.csv")));
+        resources.addAll(loadBooks(path.resolve("book.csv")));
+        resources.addAll(loadMovies(path.resolve("movie.csv")));
         return resources;
     }
 

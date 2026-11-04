@@ -77,18 +77,10 @@ public class CsvHandler {
 
     public List<Resource> loadResources(Path path) throws IOException{
         List<Resource> resources = new ArrayList<>();
-        for(VideoGame game : loadVideoGames()){
-            resources.add(game);
-        }
-        for(AudioBook audioBook : loadAudioBooks()){
-            resources.add(audioBook);
-        }
-        for(Book book : loadBooks()){
-            resources.add(book);
-        }
-        for(Movie movies : loadMovies()){
-            resources.add(movies);
-        }
+        resources.addAll(loadVideoGames(path.resolve("videogames.csv")));
+        resources.addAll(loadAudioBooks(path.resolve("audiobook.csv")));
+        resources.addAll(loadBooks(path.resolve("book.csv")));
+        resources.addAll(loadMovies(path.resolve("movie.csv")));
         return resources;
     }
 
@@ -151,29 +143,29 @@ public class CsvHandler {
         }
     }
 
-    public void saveResources(List<Resource> resources){
+    public void saveResources(List<Resource> resources, Path path){
         for(Resource resource : resources){
             if(resource instanceof Book){
                 try {
-                    saveBook(resource);
+                    saveBook((Book) resource, path);
                 } catch(IOException e){
                     IO.println("Fejl i saveResource - saveBooks");
                 }
             } else if (resource instanceof AudioBook) {
                 try {
-                    saveAudio(resource);
+                    saveAudio(List.of((AudioBook) resource), path);
                 } catch(IOException e){
                     IO.println("Fejl i saveResource - saveAudio");
                 }
             } else if (resource instanceof VideoGame) {
                 try {
-                    saveGame(resource);
+                    saveGame(List.of((VideoGame) resource), path);
                 } catch(IOException e){
                     IO.println("Fejl i saveResource - saveGame");
                 }
             } else if (resource instanceof Movie) {
                 try {
-                    saveMovie(resource);
+                    saveMovie(List.of((Movie) resource), path);
                 } catch(IOException e){
                     IO.println("Fejl i saveResource - saveMovie");
                 }

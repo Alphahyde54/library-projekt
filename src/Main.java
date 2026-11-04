@@ -75,18 +75,18 @@ void main() {
     audioBooks.sort(new ResourceCreatorComparator());
 
    try{
-       resources = csvHandler.loadResources();
+       resources = csvHandler.loadResources(path);
    } catch (IOException e){
        IO.println("Fejl i loadResources");
    }
 
     try{
-        members = csvHandler.loadMembers();
+        members = csvHandler.loadMembers(membersPath);
     } catch (IOException e){
         IO.println("Fejl i loadMembers");
     }
     try{
-        loans = csvHandler.loadLoans(members,resources);
+        loans = csvHandler.loadLoans(members,resources, loansPath);
     } catch (IOException e) {
         IO.println("Fejl i loadLoans");
     }

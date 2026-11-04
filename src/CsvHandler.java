@@ -7,15 +7,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CsvHandler {
-    private final Path path;
     private final CsvMapper csvMapper;
 
-    public CsvHandler(Path path, CsvMapper csvMapper){
+    public CsvHandler(CsvMapper csvMapper){
         this.csvMapper = csvMapper;
-        this.path = path;
     }
 
-    public List<Member> loadMembers() throws IOException{
+    public List<Member> loadMembers(Path path) throws IOException{
         List<Member> members = new ArrayList<>();
         try(BufferedReader reader = Files.newBufferedReader(path)){
             String line;
@@ -27,7 +25,7 @@ public class CsvHandler {
         return members;
     }
 
-    public List<Book> loadBooks() throws IOException{
+    public List<Book> loadBooks(Path path) throws IOException{
         List<Book> books = new ArrayList<>();
         try(BufferedReader reader = Files.newBufferedReader(path)){
             String line;
@@ -38,7 +36,7 @@ public class CsvHandler {
         }
         return books;
     }
-    public List<AudioBook> loadAudioBooks() throws IOException{
+    public List<AudioBook> loadAudioBooks(Path path) throws IOException{
         List<AudioBook> audioBooks = new ArrayList<>();
         try(BufferedReader reader = Files.newBufferedReader(path)){
             String line;
@@ -49,7 +47,7 @@ public class CsvHandler {
         }
         return audioBooks;
     }
-    public List<Movie> loadMovies() throws IOException{
+    public List<Movie> loadMovies(Path path) throws IOException{
         List<Movie> movies = new ArrayList<>();
         try(BufferedReader reader = Files.newBufferedReader(path)){
             String line;
@@ -60,7 +58,7 @@ public class CsvHandler {
         }
         return movies;
     }
-    public List<VideoGame> loadVideoGames() throws IOException{
+    public List<VideoGame> loadVideoGames(Path path) throws IOException{
         List<VideoGame> videoGames = new ArrayList<>();
         try(BufferedReader reader = Files.newBufferedReader(path)){
             String line;
@@ -72,7 +70,7 @@ public class CsvHandler {
         return videoGames;
     }
 
-    public List<Resource> loadResources() throws IOException{
+    public List<Resource> loadResources(Path path) throws IOException{
         List<Resource> resources = new ArrayList<>();
         for(VideoGame game : loadVideoGames()){
             resources.add(game);
@@ -89,7 +87,7 @@ public class CsvHandler {
         return resources;
     }
 
-    public List<Loan> loadLoans(List<Member> members, List<Resource> resources) throws IOException {
+    public List<Loan> loadLoans(List<Member> members, List<Resource> resources, Path path) throws IOException {
         List<Loan> loans = new ArrayList<>();
         try (BufferedReader reader = Files.newBufferedReader(path)) {
             String line;
@@ -100,31 +98,31 @@ public class CsvHandler {
         return loans;
     }
 
-    public  void saveBook(Resource book)throws IOException{
+    public  void saveBook(Book book, Path path)throws IOException{
         try(BufferedWriter writer = Files.newBufferedWriter(path)){
                 writer.write(csvMapper.toCsvBook(book));
                 writer.newLine();
         }
     }
-    public  void saveAudio(Resource audioBook)throws IOException{
+    public  void saveAudio(List<AudioBook> audioBooks, Path path)throws IOException{
         try(BufferedWriter writer = Files.newBufferedWriter(path)){
                 writer.write(csvMapper.toCsvAudio(audioBook));
                 writer.newLine();
         }
     }
-    public  void saveMovie(Resource movie)throws IOException{
+    public  void saveMovie(List<Movie> movies, Path path)throws IOException{
         try(BufferedWriter writer = Files.newBufferedWriter(path)){
                 writer.write(csvMapper.toCsvMovie(movie));
                 writer.newLine();
         }
     }
-    public  void saveGame(Resource videoGame)throws IOException{
+    public  void saveGame(List<VideoGame> videoGames, Path path)throws IOException{
         try(BufferedWriter writer = Files.newBufferedWriter(path)){
                 writer.write(csvMapper.toCsvGame(videoGame));
                 writer.newLine();
         }
     }
-    public  void saveMembers(List<Member> members)throws IOException{
+    public  void saveMembers(List<Member> members, Path path)throws IOException{
         try(BufferedWriter writer = Files.newBufferedWriter(path)){
             for(Member member : members){
                 writer.write(csvMapper.toCsvMember(member));
@@ -132,7 +130,7 @@ public class CsvHandler {
             }
         }
     }
-    public  void saveLoans(List<Loan> loans)throws IOException{
+    public  void saveLoans(List<Loan> loans, Path path)throws IOException{
         try(BufferedWriter writer = Files.newBufferedWriter(path)){
             for(Loan loan : loans){
                 writer.write(csvMapper.toCsvLoan(loan));

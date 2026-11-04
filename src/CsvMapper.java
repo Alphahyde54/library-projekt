@@ -2,13 +2,13 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class CsvMapper {
-String delimiter = ",";
+    String delimiter = ",";
 
     public Member fromCsvMember(String line) {
         String[] fields = line.split(delimiter, -1);
         return new Member(
-                fields[1],
-                Integer.parseInt(fields[0])
+                fields[0],
+                Integer.parseInt(fields[1])
         );
     }
 
@@ -71,7 +71,7 @@ String delimiter = ",";
 
     public String toCsvBook(Resource book) {
         if(book instanceof Book){
-        return book.getIdentifier() + delimiter + book.getTitle() + delimiter + book.getCreator() + delimiter + ((Book) book).getLength();
+            return book.getIdentifier() + delimiter + book.getTitle() + delimiter + book.getCreator() + delimiter + ((Book) book).getLength();
         }
         return null;
     }
@@ -88,10 +88,10 @@ String delimiter = ",";
         return null;
     }
     public String toCsvGame(Resource videoGame){
-            return videoGame.getIdentifier() + delimiter + videoGame.getTitle() + delimiter + videoGame.getCreator();
+        return videoGame.getIdentifier() + delimiter + videoGame.getTitle() + delimiter + videoGame.getCreator();
     }
     public String toCsvMember(Member member){
-        return member.getID() + delimiter + member.getNavn();
+        return member.getNavn() + delimiter + member.getID();
     }
     public String toCsvLoan(Loan loan){
         return loan.member.getID()+ delimiter + loan.getResource().getIdentifier() + delimiter + loan.getBorrowDate() + delimiter + loan.getDueDate();

@@ -50,10 +50,17 @@ void main() throws IOException {
         IO.println("Fejl i loadLoans");
     }
 
+
+    csvHandler.saveResources(resources);
     try{
-        csvHandler.saveBook();
-    } catch (IOException e){
-        IO.println("Fejl i saveBooks");
+        csvHandler.saveMembers(members);
+    } catch (IOException e) {
+        IO.println("Fejl i saveMembers");
+    }
+    try{
+        csvHandler.saveLoans(loans);
+    } catch (IOException e) {
+        IO.println("Fejl i saveLoans");
     }
 
     Library library = new Library(resources, members, loanPolicy, loans);

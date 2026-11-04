@@ -65,17 +65,26 @@ String delimiter = ",";
 
 
 
-    public String toCsvBook(Book book){
-        return book.getIdentifier() + delimiter + book.getTitle() + delimiter + book.getCreator() + delimiter + book.getLength();
+    public String toCsvBook(Resource book) {
+        if(book instanceof Book){
+        return book.getIdentifier() + delimiter + book.getTitle() + delimiter + book.getCreator() + delimiter + ((Book) book).getLength();
+        }
+        return null;
     }
-    public String toCsvAudio(AudioBook audioBook){
-        return audioBook.getIdentifier() + delimiter + audioBook.getTitle() + delimiter + audioBook.getCreator() + delimiter + audioBook.getLength();
+    public String toCsvAudio(Resource audioBook){
+        if(audioBook instanceof AudioBook) {
+            return audioBook.getIdentifier() + delimiter + audioBook.getTitle() + delimiter + audioBook.getCreator() + delimiter + ((AudioBook) audioBook).getLength();
+        }
+        return null;
     }
-    public String toCsvMovie(Movie movie){
-        return movie.getIdentifier() + delimiter + movie.getTitle() + delimiter + movie.getCreator() + delimiter + movie.getLength();
+    public String toCsvMovie(Resource movie){
+        if(movie instanceof Movie) {
+            return movie.getIdentifier() + delimiter + movie.getTitle() + delimiter + movie.getCreator() + delimiter + ((Movie) movie).getLength();
+        }
+        return null;
     }
-    public String toCsvGame(VideoGame videoGame){
-        return videoGame.getIdentifier() + delimiter + videoGame.getTitle() + delimiter + videoGame.getCreator();
+    public String toCsvGame(Resource videoGame){
+            return videoGame.getIdentifier() + delimiter + videoGame.getTitle() + delimiter + videoGame.getCreator();
     }
     public String toCsvMember(Member member){
         return member.getNavn() + delimiter + member.getID();

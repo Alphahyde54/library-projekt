@@ -49,8 +49,8 @@ String delimiter = ",";
     }
     public Loan fromCsvLoan(String line, List<Member> members, List<Resource> resources) {
         String[] fields = line.split(delimiter, -1);
-        int memberId = Integer.parseInt(fields[1]);
-        String identifier = fields[2];
+        int memberId = Integer.parseInt(fields[0]);
+        String identifier = fields[1];
 
         Member member = null;
         for (Member m : members) {
@@ -60,7 +60,7 @@ String delimiter = ",";
         for (Resource r : resources) {
             if (r.getIdentifier().equals(identifier)) resource = r;
         }
-        return new Loan(member, resource, LocalDate.parse(fields[5]));
+        return new Loan(member, resource, LocalDate.parse(fields[3]));
     }
 
 

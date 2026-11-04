@@ -1,7 +1,7 @@
 void main() throws IOException {
     LoanPolicy loanPolicy = new StandardLoanPolicy();
 
-    Path path = Path.of("C:\\Users\\danie\\OneDrive - Erhvervsakademi København\\Dokumenter\\2026-10-20,Programmering,10.csv");
+    Path path = Path.of("csv/københavn");
     CsvMapper csvMapper = new CsvMapper();
     CsvHandler csvHandler = new CsvHandler(csvMapper);
 
@@ -34,31 +34,31 @@ void main() throws IOException {
     audioBooks.sort(new ResourceCreatorComparator());
 
    try{
-       resources = csvHandler.loadResources();
+       resources = csvHandler.loadResources(path);
    } catch (IOException e){
        IO.println("Fejl i loadResources");
    }
 
     try{
-        members = csvHandler.loadMembers();
+        members = csvHandler.loadMembers(membersPath);
     } catch (IOException e){
         IO.println("Fejl i loadMembers");
     }
     try{
-        loans = csvHandler.loadLoans(members,resources);
+        loans = csvHandler.loadLoans(members,resources, loansPath);
     } catch (IOException e) {
         IO.println("Fejl i loadLoans");
     }
 
 
-    csvHandler.saveResources(resources);
+    csvHandler.saveResources(resources, path);
     try{
-        csvHandler.saveMembers(members);
+        csvHandler.saveMembers(members, membersPath);
     } catch (IOException e) {
         IO.println("Fejl i saveMembers");
     }
     try{
-        csvHandler.saveLoans(loans);
+        csvHandler.saveLoans(loans, loansPath);
     } catch (IOException e) {
         IO.println("Fejl i saveLoans");
     }

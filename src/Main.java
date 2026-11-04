@@ -28,69 +28,42 @@ void main() {
     }
 
     CsvMapper csvMapper = new CsvMapper();
-    CsvHandler csvHandler = new CsvHandler(csvMapper);
-
-    Path booksPath = path.resolve("book.csv");
-    Path moviesPath = path.resolve("movie.csv");
-    Path gamesPath = path.resolve("videogames.csv");
-    Path audioPath = path.resolve("audiobook.csv");
-    Path membersPath = path.resolve("members.csv");
-    Path loansPath = path.resolve("loans.csv");
+    CsvHandler csvHandler = new CsvHandler(path, csvMapper);
 
     List<Resource> resources = new ArrayList<>();
     List<Member> members = new ArrayList<>();
     List<Loan> loans = new ArrayList<>();
+
     try {
-        try {
-            resources = csvHandler.loadResources();
-        } catch (IOException e) {
-            IO.println("Fejl i loadResources");
-        }
+        List<Book> books = csvHandler.loadBooks();
+        List<Movie> movies = csvHandler.loadMovies();
+        List<VideoGame> videoGames = csvHandler.loadVideoGames();
+        List<AudioBook> audioBooks = csvHandler.loadAudioBooks();
 
-        try {
-            members = csvHandler.loadMembers();
-        } catch (IOException e) {
-            IO.println("Fejl i loadMembers");
-        }
-        try {
-            loans = csvHandler.loadLoans(members, resources);
-        } catch (IOException e) {
-            IO.println("Fejl i loadLoans");
-        }
-    List<Book> books = csvHandler.loadBooks(booksPath);
-    List<Movie> movies = csvHandler.loadMovies(moviesPath);
-    List<VideoGame> videoGames = csvHandler.loadVideoGames(gamesPath);
-    List<AudioBook> audioBooks = csvHandler.loadAudioBooks(audioPath);
+        books.sort(new ResourceCreatorComparator());
+        books.sort(new ResourceTitleComparator());
 
-    books.sort(new ResourceCreatorComparator());
-    books.sort(new ResourceTitleComparator());
+        movies.sort(new ResourceCreatorComparator());
+        movies.sort(new ResourceTitleComparator());
 
-    movies.sort(new ResourceCreatorComparator());
-    movies.sort(new ResourceTitleComparator());
+        videoGames.sort(new ResourceCreatorComparator());
+        videoGames.sort(new ResourceTitleComparator());
 
-    videoGames.sort(new ResourceCreatorComparator());
-    videoGames.sort(new ResourceTitleComparator());
-
-    audioBooks.sort(new ResourceTitleComparator());
-    audioBooks.sort(new ResourceCreatorComparator());
-
-   try{
-       resources = csvHandler.loadResources(path);
-   } catch (IOException e){
-       IO.println("Fejl i loadResources");
-   }
-
-    try{
-        members = csvHandler.loadMembers(membersPath);
-    } catch (IOException e){
-        IO.println("Fejl i loadMembers");
-    }
-    try{
-        loans = csvHandler.loadLoans(members,resources, loansPath);
-    } catch (IOException e) {
-        IO.println("Fejl i loadLoans");
+        audioBooks.sort(new ResourceTitleComparator());
+        audioBooks.sort(new ResourceCreatorComparator());
+    } catch(IOException e){
     }
 
+    try {
+        resources = csvHandler.loadResources();
+        members = csvHandler.loadMembers();
+        loans = csvHandler.loadLoans(members, resources);
+    } catch (IOException | RuntimeException e) {
+        IO.println("Kunne ikke indlæse data: " + e.getMessage());
+        return;
+    }
+
+    try {
 
         Library library = new Library(resources, members, loanPolicy, loans);
         ConsoleUI consoleUI = new ConsoleUI(library);

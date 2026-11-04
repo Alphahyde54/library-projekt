@@ -7,8 +7,8 @@ String delimiter = ",";
     public Member fromCsvMember(String line) {
         String[] fields = line.split(delimiter, -1);
         return new Member(
-                fields[0],
-                Integer.parseInt(fields[1])
+                fields[1],
+                Integer.parseInt(fields[0])
         );
     }
 
@@ -91,9 +91,9 @@ String delimiter = ",";
             return videoGame.getIdentifier() + delimiter + videoGame.getTitle() + delimiter + videoGame.getCreator();
     }
     public String toCsvMember(Member member){
-        return member.getNavn() + delimiter + member.getID();
+        return member.getID() + delimiter + member.getNavn();
     }
     public String toCsvLoan(Loan loan){
-        return loan.member.getID()+ delimiter + delimiter + loan.getResource().getTitle() + delimiter + loan.getDueDate();
+        return loan.member.getID()+ delimiter + loan.getResource().getIdentifier() + delimiter + loan.getBorrowDate() + delimiter + loan.getDueDate();
     }
 }

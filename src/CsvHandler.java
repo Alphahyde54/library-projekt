@@ -8,9 +8,11 @@ import java.util.List;
 
 public class CsvHandler {
     private final CsvMapper csvMapper;
+    private  final Path path;
 
-    public CsvHandler(CsvMapper csvMapper){
+    public CsvHandler(Path path, CsvMapper csvMapper){
         this.csvMapper = csvMapper;
+        this.path = path;
     }
 
     public List<Member> loadMembers() throws IOException{
@@ -75,7 +77,7 @@ public class CsvHandler {
         return videoGames;
     }
 
-    public List<Resource> loadResources(Path path) throws IOException{
+    public List<Resource> loadResources() throws IOException{
         List<Resource> resources = new ArrayList<>();
         resources.addAll(loadVideoGames(path.resolve("videogames.csv")));
         resources.addAll(loadAudioBooks(path.resolve("audiobook.csv")));
@@ -96,32 +98,40 @@ public class CsvHandler {
         return loans;
     }
 
-    public  void saveBook(Resource book)throws IOException{
+    public  void saveBook(List<Book> books)throws IOException{
         Path file = path.resolve("book.csv");
         try(BufferedWriter writer = Files.newBufferedWriter(file)){
+            for (Book book : books) {
                 writer.write(csvMapper.toCsvBook(book));
                 writer.newLine();
+            }
         }
     }
-    public  void saveAudio(Resource audioBook)throws IOException{
+    public  void saveAudio(List<AudioBook> audioBooks)throws IOException{
         Path file = path.resolve("audiobook.csv");
         try(BufferedWriter writer = Files.newBufferedWriter(file)){
+            for(AudioBook audioBook : audioBooks) {
                 writer.write(csvMapper.toCsvAudio(audioBook));
                 writer.newLine();
+            }
         }
     }
-    public  void saveMovie(Resource movie)throws IOException{
+    public  void saveMovie(List<Movie> movies)throws IOException{
         Path file = path.resolve("movie.csv");
         try(BufferedWriter writer = Files.newBufferedWriter(file)){
+            for(Movie movie : movies) {
                 writer.write(csvMapper.toCsvMovie(movie));
                 writer.newLine();
+            }
         }
     }
-    public  void saveGame(Resource videoGame)throws IOException{
+    public  void saveGame(List<VideoGame> games)throws IOException{
         Path file = path.resolve("videogame.csv");
         try(BufferedWriter writer = Files.newBufferedWriter(file)){
+            for(VideoGame videoGame : games) {
                 writer.write(csvMapper.toCsvGame(videoGame));
                 writer.newLine();
+            }
         }
     }
     public  void saveMembers(List<Member> members)throws IOException{
@@ -143,33 +153,39 @@ public class CsvHandler {
         }
     }
 
-    public void saveResources(List<Resource> resources, Path path){
+    public void saveResources(List<Resource> resources){
+        List<Book> books = new ArrayList<>();
+        List<AudioBook> audioBooks = new ArrayList<>();
+        List<VideoGame> games = new ArrayList<>();
+        List<Movie> movies = new ArrayList<>();
         for(Resource resource : resources){
             if(resource instanceof Book){
-                try {
-                    saveBook((Book) resource, path);
-                } catch(IOException e){
-                    IO.println("Fejl i saveResource - saveBooks");
-                }
+                books.add((Book) resource);
             } else if (resource instanceof AudioBook) {
-                try {
-                    saveAudio(List.of((AudioBook) resource), path);
-                } catch(IOException e){
-                    IO.println("Fejl i saveResource - saveAudio");
-                }
+                audioBooks.add((AudioBook) resource);
             } else if (resource instanceof VideoGame) {
-                try {
-                    saveGame(List.of((VideoGame) resource), path);
-                } catch(IOException e){
-                    IO.println("Fejl i saveResource - saveGame");
-                }
+                games.add((VideoGame) resource);
             } else if (resource instanceof Movie) {
-                try {
-                    saveMovie(List.of((Movie) resource), path);
-                } catch(IOException e){
-                    IO.println("Fejl i saveResource - saveMovie");
-                }
+                movies.add((Movie) resource);
             }
+        }
+
+        try {
+            saveBook(books);
+        } catch (IOException e) {
+            IO.println("Fejl i saveBooks");
+        } try {
+            saveAudio(audioBooks);
+        } catch (IOException e) {
+            IO.println("Fejl i saveAudio");
+        } try {
+            saveGame(games);
+        } catch (IOException e) {
+            IO.println("Fejl i saveGame");
+        } try {
+            saveMovie(movies);
+        } catch (IOException e) {
+            IO.println("Fejl i saveMovie");
         }
     }
 }

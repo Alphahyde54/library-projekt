@@ -89,9 +89,11 @@ class LibraryTest {
         List<Loan> loans = new ArrayList<>();
         Library library = new Library(movie2, member2, standardLoanPolicy, loans);
 
-        library.loanMaterial(title,1234);
-        assertTrue(library.isAvailable(title));
-        assertNull(library.findLoansByMemberId(memberID));
+        LoanResult result = library.loanMaterial("Think Java", 1234);   // findes ikke
+
+        assertEquals(LoanResult.WRONGTITEL, result);
+        assertTrue(loans.isEmpty());
+        assertNull(library.findLoansByMemberId(1234));
     }
 
     @Test
